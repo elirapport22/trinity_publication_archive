@@ -1,0 +1,27 @@
+{
+  "eli.rapport22@trinityschoolnyc.org": {
+    "privileges": [
+      "reader",
+      "advisor",
+      "admin",
+      "studentLeader"
+    ],
+    "publications": [
+      "The Sketch"
+    ],
+    "dateJoined": "2022-04-01T01:36:35.316Z"
+  },
+
+  "justin.gohde@trinityschoolnyc.org": {
+    "privileges": [
+      "reader",
+      "advisor",
+      "admin",
+      "studentLeader"
+    ],
+    "publications": [
+      "The Sketch"
+    ],
+    "dateJoined": "2022-04-01T01:36:35.316Z"
+  }
+}
