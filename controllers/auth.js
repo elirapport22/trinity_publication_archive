@@ -31,7 +31,9 @@ router.use((req, res, next) => {
 passport.use(new GoogleStrategy({
     clientID: KEYS["google-client-id"],
     clientSecret: KEYS["google-client-secret"],
-    callbackURL: "https://pumpkin-pie-30391.herokuapp.com/auth/google/callback"
+
+    callbackURL: "http://localhost:3000/auth/google/callback"
+     //callbackURL: "https://pumpkin-pie-30391.herokuapp.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     userProfile = profile; //so we can see & use details form the profile

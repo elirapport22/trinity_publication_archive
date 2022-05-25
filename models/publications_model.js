@@ -55,6 +55,31 @@ exports.getPublicationByUser = function(user){
   return object_of_belonging_publications;
 }
 
+exports.getPublicationByEditionID = function(id){
+let publication_info = JSON.parse(fs.readFileSync('data/publications.json'));
+  for (const [key, value] of Object.entries(publication_info)) {
+    console.log(value.editions)
+    console.log("value^^")
+      for(edition of value.editions){
+        if(edition["id"] == id){
+          return edition;
+        }
+      }
+      return {}
+  }
+}
+
+
+//   let allPublications = JSON.parse(fs.readFileSync('data/publications.json'));
+//   for(one in allPublications){
+//     for(edition in one["editions"]){
+//       if(edition["id"] == id){
+//         return edition;
+//       }
+//     }
+//     return {}
+//   }
+// }
 exports.newEdition = function(publication_name,form_date,pdflink,topics_covered){
   let publication_info = JSON.parse(fs.readFileSync('data/publications.json'));
   let newID = uuid.v1();
@@ -136,4 +161,52 @@ exports.approveEdition = function(publication_name,edition_id,advisor_email){
         }
       }
     fs.writeFileSync("data/publications.json", JSON.stringify(publication_info));
+}
+
+exports.SaveComment = function(edition_id,comment,user){
+  console.log(edition_id)
+  console.log("EDITIONID^")
+  let publication_info = JSON.parse(fs.readFileSync('data/publications.json'));
+  for (const [key, value] of Object.entries(publication_info)) {
+      for(edition of value.editions){
+        if(edition["id"] == edition_id){
+          if(!edition.comments){
+            edition.comments = [comment];
+          }
+          else{
+            edition.comments.push(comment);
+          }
+          fs.writeFileSync("data/publications.json", JSON.stringify(publication_info));
+        }
+      }
+  }
+
+  // for (const key of Object.entries(publication_info)) {
+  //     for(edition of publication_info[key]["editions"]){
+  //       if(edition["id"] == edition_id){
+  //         if(!edition.comments){
+  //           edition.comments = [comment];
+  //         }
+  //         else{
+  //           edition.comments.push(comment);
+  //         }
+  //         fs.writeFileSync("data/publications.json", JSON.stringify(publication_info));
+  //       }
+  //     }
+  // console.log(key);
+  // console.log("KEY^")
+  // }
+  // for(publication in publication_info){
+  //   for(edition of publication_info[publication]["editions"]){
+  //     if(edition["id"] == edition_ID){
+  //       if(!edition.comments){
+  //         edition.comments = [comment];
+  //       }
+  //       else{
+  //         edition.comments.push(comment);
+  //       }
+  //     }
+  //   }
+  // }
+return {};
 }

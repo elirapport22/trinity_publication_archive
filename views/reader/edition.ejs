@@ -1,0 +1,99 @@
+<%- include('../partials/navbar') -%>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <embed src="/uploads/1652189054904-TrinityTimes2021November15.pdf" width="100%" height="350%"/>
+    </div>
+    <div class="col">
+
+      <!-- <div id="messages">
+
+       <textarea id="messagesDisplay" name="story"
+              rows="20" cols="50">
+      </textarea><br>
+      <input type="text" id="messageInput"><button type="button" id="sendButton">Post a Comment</button><br>
+
+      </div> -->
+
+      <form action="/saveComment" method="POST">
+         <input type="text" id="comment" name="comment" value="">
+         <input type="hidden" id="publication" name="publication" value="<%=user%>" >
+         <input type="hidden" id="user" name="user" value="<%=user%>" >
+         <input type="hidden" id="edition_id" name="edition_id" value="<%=edition_id%>" >
+         <input type="submit" value="Save comment!">
+       </form>
+
+       <div class="rightpage">
+         <h3>Saved Comments:</h3>
+
+         <% for (let i=0; i< comments.length; i++){ %>
+          <h2> <%=comments[i]%> </h2>
+          <% console.log(comments[i]) %>
+          <br>
+         <%  } %>
+
+       </div>
+
+      
+      <script>
+        let socket = io.connect('/');//the default namespace
+        socket.emit('connectionEvent', {user:'<%=user%>'});
+
+        socket.on('announcement', function(data) {
+            console.log(data)
+            let mDisplay = document.getElementById('messagesDisplay');
+            let text ="";
+            if(data.user)
+               text = data.user+": "+data.message+"\n";
+            else
+               text = data.message+"\n";
+            mDisplay.value +=text;
+        });
+
+        socket.on('connectionEvent', function(data) {
+            //keep track of the current number of participants in the numClientsDisplay span
+            let numClientsDisplay = document.getElementById('numClientsDisplay');
+            let text = "Participants: " + data.numClients;
+            numClientsDisplay.innerText = text;
+            let mDisplay = document.getElementById('messagesDisplay');
+
+            text = data.user+": "+data.message+"\n";
+
+            mDisplay.value =  mDisplay.value.trim()+text;
+        });
+
+        document.getElementById("sendButton").addEventListener('click', function(){
+          let messageData = document.getElementById("messageInput").value;
+          console.log("sending: "+messageData);
+          socket.emit('announcement', { user:'<%=user%>', message: messageData });
+          let comment = {
+                  userFirstName:'',
+                  message: messageData
+                }
+                console.log();
+        });
+      </script>
+    </div>
+
+
+
+
+
+
+
+</body>

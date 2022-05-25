@@ -91,9 +91,6 @@
               <div class="padding"></div>
           </div>
 
-
-
-
           <div class="col-md-9">
             <div class="padding"></div>
             <div id="publications_displayed" class="table-responsive">
@@ -104,7 +101,8 @@
                     <div class="row">
                   <%}%>
                   <div class="column">
-                    <a href=<%=editions[i].pdf_link%>>
+                    <a href="<%="/edition/"+editions[i].id%>">
+
                     <div class="card">
                       <h3><%=editions[i].publication_name%></h3>
                       <p><%=editions[i].form_date%></p>

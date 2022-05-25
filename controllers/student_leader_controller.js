@@ -3,6 +3,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const CREDENTIALS = require('../config/credentials.json');
+const multer = require('multer');
 
 
 const SCOPES = [
@@ -19,6 +20,7 @@ const TOKEN_PATH = 'token.json';
   router = express.Router();
 
 const Publications = require('../models/publications_model');
+let File = require('../models/file_model');
 
 function loggedIn(request, response, next) {
   if (request.user) {
@@ -82,6 +84,8 @@ router.post('/student_publication_admin_form_update',loggedIn, function(request,
   let form_date = request.body.form_date;
   let pdflink = request.body.pdflink;
   let topics_covered = request.body["topics covered"];
+  console.log(topics_covered)
+  console.log("topicsCovered^")
   let  userID = request.user._json.email;
   let editionid = request.body.edition_ID;
   let publicationID = request.body.publicationID;
